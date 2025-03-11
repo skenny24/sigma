@@ -13,7 +13,7 @@ Current release: Sigma38
 
 ### Where to get Sigma ###
 
-#### Source can be downloaded [here](https://github.com/skenny24/sigma/archive/refs/heads/main.zip) or using git: ####
+#### Source can be downloaded using git: ####
 
 * You will need to have [git](http://git-scm.com/) installed on your machine
 * Then you can run the following command
