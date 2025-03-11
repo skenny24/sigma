@@ -8,7 +8,7 @@ Current release: Sigma38
 * A Sigma tutorial is available [here](tutorial.md)  
 * Sigma reference sheet can be found [here](ReferenceSheet.md)  
 * Release Notes are available [here](ReleaseNotes.md)
-* for help contact: sigma@ict.usc.edu
+* For help contact: sigma@ict.usc.edu
 
 
 ### Where to get Sigma ###
