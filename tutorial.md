@@ -33,7 +33,7 @@ As a final note before we get started, this tutorial will define, redefine, and 
 
 ### Lispworks ###
 * This tutorial requires that you have a Common Lisp implementation installed. The preferred system is Lispworks. There is a free trial version available for download [here](http://www.lispworks.com/downloads/index.html) which is sufficient for all the exercises in this tutorial. 
-* The source code needed for this tutorial is available [here](https://github.com/skenny24/sigma/blob/main/src/sigma38-tutorial.lisp)
+* The source code needed for this tutorial is available [here](https://github.com/skenny24/sigma/blob/master/src/sigma38-tutorial.lisp)
 * Next, start up Lispworks, select 'open' & navigate to the location of sigma-tutorial.lisp on your filesystem and double click to open.
 * From the top menu select buffers -> compile
 * You will now have all of the sigma functionality & the tutorial code loaded into your system so you can run any of the commands listed below.  
@@ -62,9 +62,9 @@ SIGMA> (load "/PATH/TO/sigma/src/rwtutorial.lisp")
 * You should now be able to run any of the functions shown in the tutorial within the clisp/emacs/sigma environment
 
 ## Operators (+conditionals & functions) ##
-First, let's introduce the [```(init)```](https://github.com/skenny24/sigma/blob/main/ReferenceSheet.md#initialize-a-sigma-program) Sigma function. [```(init)```](https://github.com/skenny24/sigma/blob/main/ReferenceSheet.md#initialize-a-sigma-program) is required to initialize a Sigma model and it needs to be called each time a new Sigma model is being initiated. Check the [reference sheet](https://github.com/skenny24/sigma/blob/main/ReferenceSheet.md) for the full definition of [```(init)```](https://github.com/skenny24/sigma/blob/main/ReferenceSheet.md#initialize-a-sigma-program). In general, clicking on any name or phrase that is highlighted will take you to the reference sheet entry for it.  At this point, we are only interested in one of the optional arguments for [```(init)```](https://github.com/skenny24/sigma/blob/main/ReferenceSheet.md#initialize-a-sigma-program), which is the ```<operator-names>```. This argument allows us to define the operators that are available to our virtual agent. Let's assume there are only three operators available to the virtual agent to move on the 1D grid. These operators are **left**, **right**, and **none** (stand still). Consequently, the call ```(init '(left right none))``` initializes a Sigma model with these operators.
+First, let's introduce the [```(init)```](https://github.com/skenny24/sigma/blob/master/ReferenceSheet.md#initialize-a-sigma-program) Sigma function. [```(init)```](https://github.com/skenny24/sigma/blob/master/ReferenceSheet.md#initialize-a-sigma-program) is required to initialize a Sigma model and it needs to be called each time a new Sigma model is being initiated. Check the [reference sheet](https://github.com/skenny24/sigma/blob/master/ReferenceSheet.md) for the full definition of [```(init)```](https://github.com/skenny24/sigma/blob/master/ReferenceSheet.md#initialize-a-sigma-program). In general, clicking on any name or phrase that is highlighted will take you to the reference sheet entry for it.  At this point, we are only interested in one of the optional arguments for [```(init)```](https://github.com/skenny24/sigma/blob/master/ReferenceSheet.md#initialize-a-sigma-program), which is the ```<operator-names>```. This argument allows us to define the operators that are available to our virtual agent. Let's assume there are only three operators available to the virtual agent to move on the 1D grid. These operators are **left**, **right**, and **none** (stand still). Consequently, the call ```(init '(left right none))``` initializes a Sigma model with these operators.
 
-Let's assume that the virtual agent is going to randomly navigate this 1D grid. Then the virtual agent needs to randomly select and apply these operators. [```Actions```](https://github.com/skenny24/sigma/blob/main/ReferenceSheet.md#format-for-predicate-patterns-conditions-condacts-and-actions) are used here to provide input for operator selection. Actions are one part of the Sigma construct [```conditional```](https://github.com/skenny24/sigma/blob/main/ReferenceSheet.md#define-conditionals), which structures the long-term memory. For example, the conditional ```acceptable``` below makes all three operators equally likely to be selected:
+Let's assume that the virtual agent is going to randomly navigate this 1D grid. Then the virtual agent needs to randomly select and apply these operators. [```Actions```](https://github.com/skenny24/sigma/blob/master/ReferenceSheet.md#format-for-predicate-patterns-conditions-condacts-and-actions) are used here to provide input for operator selection. Actions are one part of the Sigma construct [```conditional```](https://github.com/skenny24/sigma/blob/master/ReferenceSheet.md#define-conditionals), which structures the long-term memory. For example, the conditional ```acceptable``` below makes all three operators equally likely to be selected:
 ```lisp
   (conditional 'acceptable
                :actions '((selected (operator left))
@@ -74,7 +74,7 @@ Let's assume that the virtual agent is going to randomly navigate this 1D grid. 
                )
 ``` 
 
-```selected``` is a system generated [```predicate```](https://github.com/skenny24/sigma/blob/main/ReferenceSheet.md#define-predicates) that frames the decision process among the defined operators.  [```Predicates```](https://github.com/skenny24/sigma/blob/main/ReferenceSheet.md#define-predicates) specify relations among sets of arguments. They will be introduced in more depth shortly. 
+```selected``` is a system generated [```predicate```](https://github.com/skenny24/sigma/blob/master/ReferenceSheet.md#define-predicates) that frames the decision process among the defined operators.  [```Predicates```](https://github.com/skenny24/sigma/blob/master/ReferenceSheet.md#define-predicates) specify relations among sets of arguments. They will be introduced in more depth shortly. 
 
 A single cognitive – or decision – cycle is run by calling ```(decide 1)``` or ```(d 1)```. So putting these together, the simple Sigma model is initialized, created and run by the function:
 
@@ -91,7 +91,7 @@ A single cognitive – or decision – cycle is run by calling ```(decide 1)``` 
 )
 ``` 
 
-The Sigma function [```(print-pred-function)```](https://github.com/skenny24/sigma/blob/main/ReferenceSheet.md#to-print) or ```(ppfn)``` prints the contents of a single predicate working memory function. If we call the function ```(ppfn 'selected)``` after running the ```(random-walk-1)``` function above, we will see an output similar to:
+The Sigma function [```(print-pred-function)```](https://github.com/skenny24/sigma/blob/master/ReferenceSheet.md#to-print) or ```(ppfn)``` prints the contents of a single predicate working memory function. If we call the function ```(ppfn 'selected)``` after running the ```(random-walk-1)``` function above, we will see an output similar to:
 
 ```lisp
 WM for SELECTED
@@ -110,7 +110,7 @@ The Sigma parameter ```post-d``` can be used to set the forms to evaluate after 
 
 In the Sigma cognitive language ```*``` denotes the entire domain of an domain argument. Therefore, the modified ```acceptable``` conditional here behaves exactly as in the previous case, where separate actions were provided for each element of the domain. 
 
-By default, Sigma selects randomly among all operators with the highest rating – here all three operators share a default rating of 1 – and maintains the one selected until either it is rejected or a more highly rated operator becomes available.  This is the ```best``` selection rule. If we want the virtual agent to truly random walk, we must change this selection rule to either  ```prob-match``` (probability-match) or ```boltzmann``` using Sigma's [```(operator-selection)```](https://github.com/skenny24/sigma/blob/main/ReferenceSheet.md#specify-the-form-of-selection-to-use-for-operators-in-the-selected-predicate) function. The former chooses randomly each cycle with a probability proportional to the relative ratings, while the latter does something similar after first exponentially transforming the ratings.  With either of these, the modified Sigma model selects a random operator at each decision cycle:
+By default, Sigma selects randomly among all operators with the highest rating – here all three operators share a default rating of 1 – and maintains the one selected until either it is rejected or a more highly rated operator becomes available.  This is the ```best``` selection rule. If we want the virtual agent to truly random walk, we must change this selection rule to either  ```prob-match``` (probability-match) or ```boltzmann``` using Sigma's [```(operator-selection)```](https://github.com/skenny24/sigma/blob/master/ReferenceSheet.md#specify-the-form-of-selection-to-use-for-operators-in-the-selected-predicate) function. The former chooses randomly each cycle with a probability proportional to the relative ratings, while the latter does something similar after first exponentially transforming the ratings.  With either of these, the modified Sigma model selects a random operator at each decision cycle:
 
 ```lisp
 (defun random-walk-2()
@@ -126,18 +126,18 @@ By default, Sigma selects randomly among all operators with the highest rating �
 ``` 
 
 ## Internal action execution (+ types & predicates) ##
-None of the models seen so far actually perform any actions, all they do is select operators to be executed. Now, let's start with the case where all the movements are mentally simulated on 1-D grid model. For this mental simulation, we need a representation for the 1-D grid and a data structure that points to our current location on the grid.  [```Types```](https://github.com/skenny24/sigma/blob/main/ReferenceSheet.md#define-types)  The representation of the 1-D grid in this example is captured by defining a [```type```](https://github.com/skenny24/sigma/blob/main/ReferenceSheet.md#define-types) named ```1D-grid``` :```(new-type '1D-grid :numeric t :discrete t :min 1 :max 8)```. Type **location** is discrete numeric and its scope is from 1 to 8 (8 not included). Each of these 7 digits correspond to a cell in our hypothetical 1-D grid. 
+None of the models seen so far actually perform any actions, all they do is select operators to be executed. Now, let's start with the case where all the movements are mentally simulated on 1-D grid model. For this mental simulation, we need a representation for the 1-D grid and a data structure that points to our current location on the grid.  [```Types```](https://github.com/skenny24/sigma/blob/master/ReferenceSheet.md#define-types)  The representation of the 1-D grid in this example is captured by defining a [```type```](https://github.com/skenny24/sigma/blob/master/ReferenceSheet.md#define-types) named ```1D-grid``` :```(new-type '1D-grid :numeric t :discrete t :min 1 :max 8)```. Type **location** is discrete numeric and its scope is from 1 to 8 (8 not included). Each of these 7 digits correspond to a cell in our hypothetical 1-D grid. 
 
-The agent's current location is captured via a [```predicate```](https://github.com/skenny24/sigma/blob/main/ReferenceSheet.md#define-predicates). [```Predicates```](https://github.com/skenny24/sigma/blob/main/ReferenceSheet.md#define-predicates) specify relations among sets of typed arguments. In this case, we only need a single argument ```x``` of type ```1D-grid``` for the [```predicate```](https://github.com/skenny24/sigma/blob/main/ReferenceSheet.md#define-predicates) ```location```: 
+The agent's current location is captured via a [```predicate```](https://github.com/skenny24/sigma/blob/master/ReferenceSheet.md#define-predicates). [```Predicates```](https://github.com/skenny24/sigma/blob/master/ReferenceSheet.md#define-predicates) specify relations among sets of typed arguments. In this case, we only need a single argument ```x``` of type ```1D-grid``` for the [```predicate```](https://github.com/skenny24/sigma/blob/master/ReferenceSheet.md#define-predicates) ```location```: 
 ```lisp  
 (predicate 'location :world 'closed :arguments '((x 1D-grid !))) 
 ```
 
-One key distinction among types of predicates is whether they are unique or universal, which is itself grounded in whether the predicate’s arguments are unique or universal.  Universal arguments are like variables in rule systems, where any or all of the elements in the variable’s domain may be valid.  Unique arguments are like random variables in probabilistic systems, where a distribution is provided over all of the elements of variable’s domain but only a single value is actually correct.  The ```location``` [```predicate```](https://github.com/skenny24/sigma/blob/main/ReferenceSheet.md#define-predicates) is a unique predicate as its only argument ```x``` is annotated with ```!```. Use of ```!``` implies that a best alternative (i.e., the most likely grid location) is to be selected. 
+One key distinction among types of predicates is whether they are unique or universal, which is itself grounded in whether the predicate’s arguments are unique or universal.  Universal arguments are like variables in rule systems, where any or all of the elements in the variable’s domain may be valid.  Unique arguments are like random variables in probabilistic systems, where a distribution is provided over all of the elements of variable’s domain but only a single value is actually correct.  The ```location``` [```predicate```](https://github.com/skenny24/sigma/blob/master/ReferenceSheet.md#define-predicates) is a unique predicate as its only argument ```x``` is annotated with ```!```. Use of ```!``` implies that a best alternative (i.e., the most likely grid location) is to be selected. 
 
-Another distinction among types of predicates concerns whether they are *open world* versus *closed world*, and thus whether unspecified values are assumed to be unknown (as in probabilistic networks and many logics) or false (as in rules).  The ```location``` [```predicate```](https://github.com/skenny24/sigma/blob/main/ReferenceSheet.md#define-predicates) is defined as a *closed world* [```predicate```](https://github.com/skenny24/sigma/blob/main/ReferenceSheet.md#define-predicates). **Non-persistent predicates don't do selection **. 
+Another distinction among types of predicates concerns whether they are *open world* versus *closed world*, and thus whether unspecified values are assumed to be unknown (as in probabilistic networks and many logics) or false (as in rules).  The ```location``` [```predicate```](https://github.com/skenny24/sigma/blob/master/ReferenceSheet.md#define-predicates) is defined as a *closed world* [```predicate```](https://github.com/skenny24/sigma/blob/master/ReferenceSheet.md#define-predicates). **Non-persistent predicates don't do selection **. 
 
-Now, we do need to define how the selected operators are applied onto the mental representation of the grid. [```Conditionals```](https://github.com/skenny24/sigma/blob/main/ReferenceSheet.md#define-conditionals) are the appropriate constructs to do the necessary modification on the ```location``` [```predicate```](https://github.com/skenny24/sigma/blob/main/ReferenceSheet.md#define-predicates). For example, the [```conditional```](https://github.com/skenny24/sigma/blob/main/ReferenceSheet.md#define-conditionals) ```move-left``` performs the action ```left``` by decreasing the value of location by 1. 
+Now, we do need to define how the selected operators are applied onto the mental representation of the grid. [```Conditionals```](https://github.com/skenny24/sigma/blob/master/ReferenceSheet.md#define-conditionals) are the appropriate constructs to do the necessary modification on the ```location``` [```predicate```](https://github.com/skenny24/sigma/blob/master/ReferenceSheet.md#define-predicates). For example, the [```conditional```](https://github.com/skenny24/sigma/blob/master/ReferenceSheet.md#define-conditionals) ```move-left``` performs the action ```left``` by decreasing the value of location by 1. 
 ```lisp
   (conditional 'move-left
                :conditions '(
@@ -163,7 +163,7 @@ Similarly,
                )
 ```
 
-Initial location of the virtual agent can be specified by defining an [```evidence```](https://github.com/skenny24/sigma/blob/main/ReferenceSheet.md#define-evidence). Let's assume that the agent is initially located at the grid location 4:
+Initial location of the virtual agent can be specified by defining an [```evidence```](https://github.com/skenny24/sigma/blob/master/ReferenceSheet.md#define-evidence). Let's assume that the agent is initially located at the grid location 4:
 
 ```lisp
 (evidence '((location (x 4)) ))
@@ -212,7 +212,7 @@ If we want to run the current Sigma model for 5 decision cycles, then the model 
 ```
 
 ## Trials ##
-Next, let's introduce the concept of running [```trials```](https://github.com/skenny24/sigma/blob/main/ReferenceSheet.md#run-a-sigma-program). A [```trial```](https://github.com/skenny24/sigma/blob/main/ReferenceSheet.md#run-a-sigma-program) continues to run until the Sigma model is terminated by a ```halt``` call. We can modify our model such that it terminates when the agent reaches one of the end locations, 1 or 7, of the grid. For example:
+Next, let's introduce the concept of running [```trials```](https://github.com/skenny24/sigma/blob/master/ReferenceSheet.md#run-a-sigma-program). A [```trial```](https://github.com/skenny24/sigma/blob/master/ReferenceSheet.md#run-a-sigma-program) continues to run until the Sigma model is terminated by a ```halt``` call. We can modify our model such that it terminates when the agent reaches one of the end locations, 1 or 7, of the grid. For example:
 
 ```lisp
  (conditional 'halt-at-location-1
@@ -399,7 +399,7 @@ Until now, all the operators were applied on a mental representation. Let's defi
 ```
 Two Lisp functions external to the Sigma model are defined to manage the interactions between the Sigma model and the external world. The function ```perceive-location``` provides information about the agent's location to Sigma's perception function and the function ```execute-operator``` executes Sigma's selected operators and modifies the location of the agent on the external world.
 
-The ```perceive-location``` function utilizes Sigma's [```perceive```](https://github.com/skenny24/sigma/blob/main/ReferenceSheet.md#define-evidence) function. In general, the ```perceive``` function is used to provide probabilistic evidence to *open-world* ```predicates```. . The ```perceive-location``` function two parameters: (1) *correct-prob* is the probability of perceiving the correct location of the agent and (2) *correct-mass* is the probabilistic mass for the location perceived. Sigma's ```perceive``` function is called from ```perceive-location```. For example, 
+The ```perceive-location``` function utilizes Sigma's [```perceive```](https://github.com/skenny24/sigma/blob/master/ReferenceSheet.md#define-evidence) function. In general, the ```perceive``` function is used to provide probabilistic evidence to *open-world* ```predicates```. . The ```perceive-location``` function two parameters: (1) *correct-prob* is the probability of perceiving the correct location of the agent and (2) *correct-mass* is the probabilistic mass for the location perceived. Sigma's ```perceive``` function is called from ```perceive-location```. For example, 
 ```lisp (perceive ((location 0.9 (x 4))))``` 
 is the perception of agent's location being position 4 with a probability of 0.9. The ```perceive-location``` function is:
 
@@ -579,9 +579,9 @@ So our model looks like:
 ```
 
 ## External objects ##
-Next, let's assume there is an object at each grid location and the agent perceives these objects. First, let's define a [```type```](https://github.com/skenny24/sigma/blob/main/ReferenceSheet.md#define-types) named ```obj-type``` :```(new-type 'obj-type :constants '(walker table dog human))```. Type **obj-type** is symbolic and its scope includes objects: *walker, table, dog, and human*. 
+Next, let's assume there is an object at each grid location and the agent perceives these objects. First, let's define a [```type```](https://github.com/skenny24/sigma/blob/master/ReferenceSheet.md#define-types) named ```obj-type``` :```(new-type 'obj-type :constants '(walker table dog human))```. Type **obj-type** is symbolic and its scope includes objects: *walker, table, dog, and human*. 
 
-The ```object``` [```predicate```](https://github.com/skenny24/sigma/blob/main/ReferenceSheet.md#define-predicates) and the ```object-perceived``` ```predicate``` specifies the relation between the grid locations and object types:  
+The ```object``` [```predicate```](https://github.com/skenny24/sigma/blob/master/ReferenceSheet.md#define-predicates) and the ```object-perceived``` ```predicate``` specifies the relation between the grid locations and object types:  
 
 ```lisp 
  (predicate 'object :perception t :arguments '((object obj-type %)))
