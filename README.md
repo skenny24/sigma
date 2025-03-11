@@ -77,10 +77,10 @@ IMPORTANT NOTE: to compile new files within the sigma package the package direct
 ```
 # Older Releases available [here](https://bitbucket.org/sigma-development/sigma-archive/src) 
 
-Download the archive, releases < Sigma37 require the following steps
+Download the archive, releases < Sigma38 require the following steps
 
 * Under *SigmaXX/src* you will see the ```sigma.lisp```
-* [LispWorks](http://www.lispworks.com/) is required for use of graphical features, but can be run in other implementations for use of the core functionality (tested with CLISP)
+* [LispWorks](http://www.lispworks.com/) is required for use of graphical features, but Sigma can be run in other implementations for use of the core functionality (tested with CLISP)
 * load/compile the file *sigma.lisp*. This will also compile the additional files that sigma requires & if Lispworks' CAPI library is detected the graphical features will be loaded as well. 
 * The variable *sigma-home* by default assumes that you have downloaded sigma into your $HOME directory. If you have downloaded Sigma to another location you will need to adjust that variable (line 52 of *sigma.lisp*)
 * other GUI-based git tools available: [SourceTree](https://www.atlassian.com/software/sourcetree/overview) 
